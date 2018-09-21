@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:include="_layout :: head" th:with="title='Welcome'"></head>
+
+<body>
+
+	<div th:include="_layout :: header"></div>
+	<h1>Home</h1>
+	<p th:text="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"></p>
+
+	<div th:include="_layout :: footer"></div>
+</body>
+
+</html>

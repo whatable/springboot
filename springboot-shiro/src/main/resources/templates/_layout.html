@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+<title th:text="${title}"></title>
+<meta content="text/html;charset=UTF-8" />
+</head>
+<body>
+
+	<div th:fragment="header">
+		<a href="/">HOME</a>
+		<a href="demo">DEMO</a>
+		
+		<div th:if="${session.user} != null">
+			<span th:text="${session.user.username}" ></span>
+			<a href="logout">LOGOUT</a>
+		</div>
+		
+		<div th:if="${session.user} == null">
+			<span th:text="Unlogin" ></span>
+			<a href="login">LOGIN</a>
+			<a href="register">REGISTER</a>
+		</div>
+	</div>
+
+	<div th:fragment="footer">&copy; copyright</div>
+</body>
+
+</html>

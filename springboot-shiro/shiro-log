@@ -1,0 +1,8 @@
+无任何配置，直接访问SecurityUtils
+	org.apache.shiro.UnavailableSecurityManagerException: No SecurityManager accessible to the calling code, either bound to the org.apache.shiro.util.ThreadContext or as a vm static singleton.  This is an invalid application configuration.
+	在ShiroConfig中配置securityManager和shiroFilterFactoryBean，顺便需要创建Realm
+	
+Realm创建了，但方法没有具体实现
+	登录时，调用doGetAuthenticationInfo()（该方法目前返回null），抛异常::UnknownAccountException认为用户不存在
+	把return null改为return new SimpleAuthenticationInfo();
+	

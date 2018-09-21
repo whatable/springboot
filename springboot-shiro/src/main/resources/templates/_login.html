@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	
+<form th:fragment="form" action="login" method="post">
+	<input type="text" name="username" th:value="${param.username}">
+	<input type="password" name="password" value="123456">
+	<input type="submit">
+</form>

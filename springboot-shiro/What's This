@@ -1,0 +1,6 @@
+shiro与spring boot整合的简单范例
+用的是shiro-spring（而不是原生shiro）
+数据库用了h2内存数据库，开启了web console，访问地址：http://localhost:8080/h2-console/
+数据库sa/123456
+数据源是c3p0
+shiro超级管理员admin/123456（密码加密）
