@@ -1,21 +1,20 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
-<head th:include="_layout :: head" th:with="title='403'"></head>
-
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="_decorator">
+<head>
+<title>Error #403</title>
+</head>
 <body>
-
-	<div th:include="_layout :: header"></div>
-	<h1>403</h1>
-	<p th:text="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}"></p>
-	<p th:text="${code}"></p>
-
-	<p th:switch="${code}">
-		<span th:case="'ACCOUNT_NOT_EXISTS'">账号不存在</span>
-		<span th:case="'PASSWORD_NOT_MATCH'">密码不匹配</span>
-	</p>
-	
-	<div th:include="_layout :: footer"></div>
+	<section layout:fragment="content">
+		<h1>Error #403</h1>
+		<p th:text="${code}"></p>
+		<p th:switch="${code}">
+			<span th:case="'ACCOUNT_NOT_EXISTS'">账号不存在</span>
+			<span th:case="'PASSWORD_NOT_MATCH'">密码不匹配</span>
+		</p>
+		
+		<p th:text="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}"></p>
+	</section>
 </body>
-
 </html>

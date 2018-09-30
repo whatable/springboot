@@ -1,23 +1,21 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
-<head th:include="_layout :: head" th:with="title='Login'"></head>
-
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="_decorator">
+<head>
+<title>Login</title>
+</head>
 <body>
-
-	<div th:include="_layout :: header"></div>
-	<h1>Login</h1>
-	<p th:text="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}"></p>
-	
-	<div th:fragment="form">
-		<form action="login" method="post">
-			<input type="text" name="username" th:value="${param.username}">
-			<input type="password" name="password">
-			<input type="submit">
-		</form>
-	</div>
-	
-	<div th:include="_layout :: footer"></div>
+	<section layout:fragment="content">
+		<h1>Login</h1>
+		<div th:fragment="form">
+			<form action="login" method="post">
+				<input type="text" name="username" th:value="${param.username}">
+				<input type="password" name="password">
+				<input type="submit">
+			</form>
+		</div>
+		<p th:text="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}"></p>
+	</section>
 </body>
-
 </html>

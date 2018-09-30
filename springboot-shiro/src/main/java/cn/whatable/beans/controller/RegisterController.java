@@ -1,4 +1,4 @@
-package cn.whatable.controller;
+package cn.whatable.beans.controller;
 
 import java.io.IOException;
 import java.util.Optional;

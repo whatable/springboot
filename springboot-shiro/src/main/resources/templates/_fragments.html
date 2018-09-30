@@ -9,17 +9,19 @@
 
 	<div th:fragment="header">
 		<a href="/">HOME</a>
-		<a href="demo">DEMO</a>
+		<a href="/demo">DEMO</a>
+		<a href="/demo/need-authorized-by-role">DEMO::Authorized by Role</a>
+		<a href="/demo/need-authorized-by-permission">DEMO::Authorized by Permission</a>
 		
 		<div th:if="${session.user} != null">
 			<span th:text="${session.user.username}" ></span>
-			<a href="logout">LOGOUT</a>
+			<a href="/logout">LOGOUT</a>
 		</div>
 		
 		<div th:if="${session.user} == null">
 			<span th:text="Unlogin" ></span>
-			<a href="login">LOGIN</a>
-			<a href="register">REGISTER</a>
+			<a href="/login">LOGIN</a>
+			<a href="/register">REGISTER</a>
 		</div>
 	</div>
 

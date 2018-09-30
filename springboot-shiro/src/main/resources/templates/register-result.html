@@ -1,26 +1,25 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
-<head th:include="_layout :: head" th:with="title='Register Result'"></head>
-
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="_decorator">
+<head>
+<title>Register Result</title>
+</head>
 <body>
+	<section layout:fragment="content">
+		<h1>Register Result</h1>
+		<div th:switch="${code}">
+			<div th:case="'FAIL::USERNAME_CONFLICT'">
+				<span th:text="|账号 ${param.username} 已注册，试试其他账号|"></span>
+				<div th:include="register :: form"></div>
+			</div>
+			<div th:case="'SUCCESS'">
+				<span th:text="|${param.username} 注册完成，马上登录|"></span>
+				<div th:include="login :: form"></div>
+			</div>
+		</div>
 
-	<div th:include="_layout :: header"></div>
-	<h1>Register Result</h1>
-	<p th:text="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}"></p>
-	
-	<div th:switch="${code}">
-		<div th:case="'FAIL::USERNAME_CONFLICT'">
-			<span th:text="|账号 ${param.username} 已注册，试试其他账号|"></span>
-			<div th:include="register :: form"></div>
-		</div>
-		<div th:case="'SUCCESS'">
-			<span th:text="|${param.username} 注册完成，马上登录|"></span>
-			<div th:include="login :: form"></div>
-		</div>
-	</div>
-	
-	<div th:include="_layout :: footer"></div>
+		<p th:text="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}"></p>
+	</section>
 </body>
-
 </html>

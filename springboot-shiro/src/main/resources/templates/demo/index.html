@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+    layout:decorator="_decorator">
+<head>
+    <title>Demo</title>
+</head>
+<body>
+    <section layout:fragment="content">
+    	<ul>
+    		<li><a href="/demo/need-authorized-by-role">DEMO::Authorized by Role</a></li>
+    		<li><a href="/demo/need-authorized-by-permission">DEMO::Authorized by Permission</a></li>
+    	</ul>
+    </section>
+</body>
+</html>

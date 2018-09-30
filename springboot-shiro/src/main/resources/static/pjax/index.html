@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html;charset=UTF-8" />
+<script src="http://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
+<style>
+	#pjax-container{ min-height: 360px; border: solid 1px #fcc}
+</style>
+</head>
+<body>
+
+	<div data-pjax>
+		<a data-pjax href="index.html">Home</a>
+		<a data-pjax href="p1.html">P1</a>
+		<a data-pjax href="p2.html">P2</a>
+	</div>
+	<section id="pjax-container">
+		<!-- 在这里更新返回的HTML字符串 -->
+	</section>
+
+
+	<script>
+		$(document).pjax('[data-pjax] a, a[data-pjax]', '#pjax-container')
+		$.pjax({url: 'p0.html', container: '#pjax-container'})
+		$(document).on('pjax:send', function() {
+			//alert(1)
+		})
+		$(document).on('pjax:complete', function() {
+			//alert(2)
+		})
+	</script>
+</body>
+</html>

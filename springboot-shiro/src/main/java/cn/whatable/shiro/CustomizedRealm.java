@@ -1,7 +1,5 @@
 package cn.whatable.shiro;
 
-import java.util.Optional;
-
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -11,11 +9,14 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
-import cn.whatable.jpa.dao.UserDao;
+import cn.whatable.beans.service.UserService;
+import cn.whatable.jpa.entity.Permission;
+import cn.whatable.jpa.entity.Role;
 import cn.whatable.jpa.entity.User;
 import cn.whatable.util.Encoder;
 
@@ -30,7 +31,9 @@ import cn.whatable.util.Encoder;
 public class CustomizedRealm extends AuthorizingRealm {
 
 	@Autowired
-	UserDao userDao;
+	UserService userService;
+
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	public CustomizedRealm() {
 		// 自定义密码（Credential）匹配验证的逻辑（基于MD5加密）
@@ -49,21 +52,29 @@ public class CustomizedRealm extends AuthorizingRealm {
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		return new SimpleAuthorizationInfo();
+		// 校验权限
+		final SimpleAuthorizationInfo anthorization = new SimpleAuthorizationInfo();
+
+		User u = (User) principals.getPrimaryPrincipal();
+		logger.info(">>>>> 校验权限 for username={}", u.getUsername());
+		
+		for (Role role : u.getRoles()) {
+			anthorization.addRole(role.getRoleName());
+			logger.info(">>>>> 填加角色 {} @ {}", role.getRoleName(), u.getUsername());
+			for (Permission permission : role.getPermissions()) {
+				anthorization.addStringPermission(permission.getPermission());
+				logger.info(">>>>> 填加授权 {} @ {}", permission.getPermission(), u.getUsername());
+			}
+		}
+
+		return anthorization;
 	}
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-		final String username = (String) token.getPrincipal();
-		User u = new User();
-		u.setUsername(username);
-		Example<User> example = Example.of(u);
-		Optional<User> opt = userDao.findOne(example);
-		if (opt.isPresent()) {
-			u = opt.get();
-			return new SimpleAuthenticationInfo(u, u.getPassword(), this.getName());
-		}
-		return null;// 本方法返回null就是用户不存在::UnknownAccountException
+		// 验证登录身份
+		User u = userService.findByUsername((String) token.getPrincipal());
+		return u == null ? null : new SimpleAuthenticationInfo(u, u.getPassword(), this.getName());// 本方法返回null就是用户不存在::UnknownAccountException
 	}
 
 }
